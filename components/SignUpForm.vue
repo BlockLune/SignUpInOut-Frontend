@@ -46,6 +46,7 @@
 <script setup lang="ts">
 import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
+import axiosInstance from "~/utils/axiosInstance";
 
 const schema = z.object({
   email: z.string().max(255, "Email is too long").email("Invalid email"),
@@ -68,5 +69,21 @@ const state = reactive({
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   console.log(event.data);
+  axiosInstance
+    .post("/api/users", {
+      email: event.data.email,
+      password: event.data.password,
+    })
+    .then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        alert("Sign up success!");
+      } else {
+        alert("Sign up failed!");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 </script>
