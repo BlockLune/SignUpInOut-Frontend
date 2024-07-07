@@ -36,8 +36,11 @@ import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 
 const schema = z.object({
-  email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Must be at least 8 characters"),
+  email: z.string().email("Invalid email").max(255, "Email is too long"),
+  password: z
+    .string()
+    .min(8, "Must be at least 8 characters")
+    .max(255, "Password is too long"),
 });
 
 type Schema = z.output<typeof schema>;
