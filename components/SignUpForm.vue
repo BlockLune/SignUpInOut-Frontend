@@ -31,6 +31,12 @@
           placeholder="Type your password again to confirm"
         />
       </UFormGroup>
+      <UFormGroup label="Captcha" name="captcha" required>
+        <div class="flex flex-row justify-center" @click="fetchCaptcha">
+          <img :src="captchaSrc" alt="captcha" />
+        </div>
+        <UInput v-model="state.captcha" placeholder="Captcha" />
+      </UFormGroup>
       <div class="flex flex-row justify-between gap-2 pt-5">
         <div class="grow">
           <UButton block color="gray" to="/"> Go Back </UButton>
@@ -57,6 +63,7 @@ const schema = z.object({
   passwordForConfirm: z.string().refine((data) => data === state.password, {
     message: "Passwords do not match",
   }),
+  captcha: z.string(),
 });
 
 type Schema = z.output<typeof schema>;
@@ -65,6 +72,31 @@ const state = reactive({
   email: undefined,
   password: undefined,
   passwordForConfirm: undefined,
+  captcha: undefined,
+});
+
+const captchaId = ref<number | undefined>(undefined);
+const captchaSrc = ref<string | undefined>(undefined);
+
+const fetchCaptcha = async () => {
+  try {
+    const response = await axiosInstance.get("/api/captcha");
+    captchaId.value = response.data.captchaId;
+
+    const captchaResponse = await axiosInstance.get(
+      `/api/captcha/${captchaId.value}`,
+      {
+        responseType: "blob",
+      }
+    );
+    captchaSrc.value = URL.createObjectURL(captchaResponse.data);
+  } catch (error) {
+    console.error("Failed to fetch captcha:", error);
+  }
+};
+
+onMounted(() => {
+  fetchCaptcha();
 });
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
