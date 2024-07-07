@@ -1,7 +1,7 @@
 <template>
-  <div class="min-w-80">
+  <div class="min-w-80 space-y-10">
     <div class="flex flex-row justify-center">
-      <div class="text-xl font-bold">Sign Up</div>
+      <div class="text-5xl font-bold">Sign Up</div>
     </div>
     <UForm :schema="schema" :state="state" class="space-y-2" @submit="onSubmit">
       <UFormGroup label="Email" name="email" required>
@@ -31,7 +31,14 @@
           placeholder="Type your password again to confirm"
         />
       </UFormGroup>
-      <UButton type="submit"> Submit </UButton>
+      <div class="flex flex-row justify-between gap-2 pt-5">
+        <div class="grow">
+          <UButton block color="gray"> Go Back </UButton>
+        </div>
+        <div class="grow">
+          <UButton type="submit" block> Submit </UButton>
+        </div>
+      </div>
     </UForm>
   </div>
 </template>
