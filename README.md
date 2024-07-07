@@ -18,5 +18,3 @@ It's really important to store user data securely. I read the following articles
 - _[How To Safely Store A Password | codahale.com](https://codahale.com/how-to-safely-store-a-password/)_
 - _[Storing User Passwords with Bcrypt | by Andrew Herman Heller | Medium](https://medium.com/@andrewhheller/storing-user-passwords-with-bcrypt-e3b7306b870a)_
 - _[Password Storage - OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)_
-
-Finally I decided to use the [`argon2id`](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#argon2id) algorithm to hash the passwords.
