@@ -1,3 +1,3 @@
 <template>
-  <div>Hello SignUpInOut Project!</div>
+  <NuxtPage />
 </template>

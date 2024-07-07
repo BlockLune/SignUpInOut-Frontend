@@ -33,7 +33,7 @@
       </UFormGroup>
       <div class="flex flex-row justify-between gap-2 pt-5">
         <div class="grow">
-          <UButton block color="gray"> Go Back </UButton>
+          <UButton block color="gray" to="/"> Go Back </UButton>
         </div>
         <div class="grow">
           <UButton type="submit" block> Submit </UButton>
