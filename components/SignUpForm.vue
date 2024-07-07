@@ -105,10 +105,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     .post("/api/users", {
       email: event.data.email,
       password: event.data.password,
+      captchaId: captchaId.value,
+      captchaAnswer: event.data.captcha,
     })
     .then((response) => {
       console.log(response);
-      if (response.status === 200) {
+      if (response.status === 201) {
         alert("Sign up success!");
       } else {
         alert("Sign up failed!");
