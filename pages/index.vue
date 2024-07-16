@@ -13,12 +13,20 @@ import * as signalR from "@microsoft/signalr";
 
 onMounted(() => {
   const connection = new signalR.HubConnectionBuilder()
-    .withUrl("https://localhost:12345/hub")
+    .withUrl("http://localhost:12345/hub")
     .build();
+
+  connection.on("messageReceived", (user, message) => {
+    console.log(user + ' says: "' + message + '"');
+    alert(user + ' says: "' + message + '"');
+  });
 
   connection
     .start()
-    .then(() => console.log("SignalR Connected"))
+    .then(() => {
+      console.log("SignalR Connected");
+      // connection.send("newMessage", "test", "Hello world!");
+    })
     .catch((err) => console.error("SignalR Connection Error: ", err));
 });
 </script>
