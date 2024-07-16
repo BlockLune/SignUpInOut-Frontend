@@ -7,3 +7,18 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import * as signalR from "@microsoft/signalr";
+
+onMounted(() => {
+  const connection = new signalR.HubConnectionBuilder()
+    .withUrl("https://localhost:12345/hub")
+    .build();
+
+  connection
+    .start()
+    .then(() => console.log("SignalR Connected"))
+    .catch((err) => console.error("SignalR Connection Error: ", err));
+});
+</script>
