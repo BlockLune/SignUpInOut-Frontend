@@ -3,31 +3,44 @@
     <div class="flex flex-row justify-center">
       <div class="text-5xl font-bold">Sign In</div>
     </div>
-    <UForm :schema="schema" :state="state" class="space-y-2" @submit="onSubmit">
-      <UFormGroup label="Email" name="email" required>
-        <UInput
-          v-model="state.email"
-          icon="i-heroicons-envelope"
-          placeholder="Please input your email"
-        />
-      </UFormGroup>
-      <UFormGroup label="Password" name="password" required>
-        <UInput
-          v-model="state.password"
-          type="password"
-          icon="i-heroicons-key"
-          placeholder="Please input your password"
-        />
-      </UFormGroup>
-      <div class="flex flex-row justify-between gap-2 pt-5">
-        <div class="grow">
-          <UButton block color="gray" to="/"> Go Back </UButton>
+    <div class="flex flex-col space-y-4">
+      <UButton
+        color="purple"
+        class="justify-center"
+        to="https://discord.com/oauth2/authorize?client_id=1261643473153560636&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsignin&scope=identify+email"
+        >Sign in with Discord</UButton
+      >
+      <UForm
+        :schema="schema"
+        :state="state"
+        class="space-y-2"
+        @submit="onSubmit"
+      >
+        <UFormGroup label="Email" name="email" required>
+          <UInput
+            v-model="state.email"
+            icon="i-heroicons-envelope"
+            placeholder="Please input your email"
+          />
+        </UFormGroup>
+        <UFormGroup label="Password" name="password" required>
+          <UInput
+            v-model="state.password"
+            type="password"
+            icon="i-heroicons-key"
+            placeholder="Please input your password"
+          />
+        </UFormGroup>
+        <div class="flex flex-row justify-between gap-2 pt-5">
+          <div class="grow">
+            <UButton block color="gray" to="/"> Go Back </UButton>
+          </div>
+          <div class="grow">
+            <UButton type="submit" block> Submit </UButton>
+          </div>
         </div>
-        <div class="grow">
-          <UButton type="submit" block> Submit </UButton>
-        </div>
-      </div>
-    </UForm>
+      </UForm>
+    </div>
   </div>
 </template>
 
@@ -70,4 +83,25 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       console.error(error);
     });
 }
+
+const route = useRoute();
+
+onMounted(async () => {
+  const code = route.query.code as string;
+  if (code) {
+    try {
+      const response = await axiosInstance.post(
+        `/api/discord/signin?code=${code}`
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        alert("Sign in successful!");
+      } else {
+        alert("Sign in failed!");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+});
 </script>

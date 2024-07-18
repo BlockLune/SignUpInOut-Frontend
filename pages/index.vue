@@ -13,7 +13,7 @@ import * as signalR from "@microsoft/signalr";
 
 onMounted(() => {
   const connection = new signalR.HubConnectionBuilder()
-    .withUrl("http://localhost:12345/hub")
+    .withUrl("http://localhost:8080/hub")
     .build();
 
   connection.on("messageReceived", (user, message) => {
